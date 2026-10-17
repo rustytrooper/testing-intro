@@ -41,7 +41,16 @@ function removeFromCart(cart, productPosition) {
   const filteredCart = cart.filter(product => product.id !== productPosition);
   return filteredCart;
  }
-function calculateCartSubtotal() { return notImplemented(); }
+function calculateCartSubtotal(cart) {
+  let totalSubtotal = 0;
+  if (cart.length === 0) {
+    return 0;
+  }
+  for(let i = 0; i < cart.length; i++) {
+    totalSubtotal += cart[i].price * cart[i].quantity;
+  }
+  return totalSubtotal;
+ }
 function calculateOrderTotal() { return notImplemented(); }
 
 const cartApi = { addToCart, changeQuantity, removeFromCart, calculateCartSubtotal, calculateOrderTotal };
