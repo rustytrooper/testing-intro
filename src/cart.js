@@ -1,9 +1,5 @@
 const products = require('../src/data/products');
 
-function notImplemented() {
-  throw new Error('Корзина ещё не реализована. Сначала прочитайте тесты.');
-}
-
 function addToCart(cart, product, qty) { 
   const existing = cart.find(item => item.id === product.id);
   if (qty === 0) {
@@ -51,7 +47,29 @@ function calculateCartSubtotal(cart) {
   }
   return totalSubtotal;
  }
-function calculateOrderTotal() { return notImplemented(); }
+function calculateOrderTotal(cart, promo) { 
+  let delivery = 30000;
+  for(let i = 0; i < cart.length; i ++) {
+    const subTotal =  cart[i].price * cart[i].quantity;
+    const discountTotal = subTotal * 0.1;
+    if (subTotal >= 50000 && !promo) {
+      delivery = 0;
+    }
+    if (promo !== 'SAVE10') {
+      return {subtotal: subTotal, discount: 0, delivery, total: subTotal + delivery};
+    }
+    if (cart.length < 2 && !promo) {
+      return {subtotal: subTotal, discount: 0, delivery, total: subTotal + delivery};
+    }
+    if (subTotal < 20000 && promo) {
+      return {subtotal: subTotal, discount: 0, delivery, total: subTotal + delivery};
+    }
+    if (subTotal > 20000 && promo) {
+      return {subtotal: subTotal, discount: discountTotal, delivery, total: (subTotal - discountTotal) + delivery};
+    }
+   
+  }
+ }
 
 const cartApi = { addToCart, changeQuantity, removeFromCart, calculateCartSubtotal, calculateOrderTotal };
 
