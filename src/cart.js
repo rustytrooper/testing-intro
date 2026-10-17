@@ -2,7 +2,15 @@ function notImplemented() {
   throw new Error('Корзина ещё не реализована. Сначала прочитайте тесты.');
 }
 
-function addToCart() { return notImplemented(); }
+function addToCart(cart, product, qty) { 
+  const existing = cart.find(item => item.id === product.id);
+  if(existing) {
+    return cart.map(item => {
+      return item.id === product.id ? {...item, quantity: item.quantity + qty} : item;
+    })
+  }
+   return [...cart, { ...product, quantity: qty }];
+}
 function changeQuantity() { return notImplemented(); }
 function removeFromCart() { return notImplemented(); }
 function calculateCartSubtotal() { return notImplemented(); }
