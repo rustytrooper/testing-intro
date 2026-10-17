@@ -37,7 +37,10 @@ function changeQuantity(cart, startQty, endQty) {
     }
   return updatedCart;
  }
-function removeFromCart() { return notImplemented(); }
+function removeFromCart(cart, productPosition) {
+  const filteredCart = cart.filter(product => product.id !== productPosition);
+  return filteredCart;
+ }
 function calculateCartSubtotal() { return notImplemented(); }
 function calculateOrderTotal() { return notImplemented(); }
 
